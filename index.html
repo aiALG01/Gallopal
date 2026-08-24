@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallopal: Trainingsplanung für Reittrainer:innen</title>
+<meta name="description" content="Gallopal ist die App für Reittrainer:innen: Stunden einstellen, Schüler:innen buchen sich ein. Werde Teil der Testphase.">
+<meta property="og:title" content="Gallopal: Trainingsplanung für Reittrainer:innen">
+<meta property="og:description" content="Stunden einstellen, Schüler:innen buchen sich ein. Die Trainingsplanung für den Reitstall, ohne Chat-Chaos.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23220C10'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='18' fill='%23FBF8F2' text-anchor='middle'%3Eg%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+<!-- ============================== NAV ============================== -->
+<header class="nav" id="siteNav">
+  <a class="nav-logo" href="#top" aria-label="Gallopal, zum Seitenanfang">
+    <span class="nav-logo-mark">gallopal</span>
+  </a>
+  <nav class="nav-links" aria-label="Hauptnavigation">
+    <a href="#app">Über die App</a>
+    <a href="#funktionen">Funktionen</a>
+    <a href="#ueber-mich">Über mich</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+  <div class="nav-actions">
+    <a class="btn btn-primary" href="#kontakt">Tester werden</a>
+    <button class="nav-menu-toggle" id="menuOpen" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileNav">
+      <i class="ph ph-list"></i>
+    </button>
+  </div>
+</header>
+
+<div class="nav-mobile-panel" id="mobileNav">
+  <button class="nav-mobile-close" id="menuClose" aria-label="Menü schließen">
+    <i class="ph ph-x"></i>
+  </button>
+  <nav class="nav-mobile-links" aria-label="Mobile Navigation">
+    <a href="#app">Über die App</a>
+    <a href="#funktionen">Funktionen</a>
+    <a href="#ueber-mich">Über mich</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+  <a class="btn btn-on-dark" href="#kontakt">Tester werden</a>
+</div>
+
+<main id="main">
+
+  <!-- ============================== HERO ============================== -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="hero-copy reveal">
+        <h1>Reitstunden einstellen. Schüler:innen buchen sich ein.</h1>
+        <p class="lede">Gallopal übernimmt die Terminplanung für Reittrainer:innen, damit mehr Zeit für den Unterricht bleibt und weniger für WhatsApp-Verlauf und Excel-Tabellen.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#kontakt">Tester werden</a>
+          <a class="btn btn-ghost" href="#app">Mehr erfahren</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal" aria-hidden="true">
+        <svg viewBox="0 0 600 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstrakte grafische Komposition in Gallopal-Grün mit fließenden Linien">
+          <defs>
+            <linearGradient id="waveGradA" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#77CBB9" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#006246" stop-opacity="0.35"/>
+            </linearGradient>
+            <linearGradient id="waveGradB" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#CEBCA1" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#77CBB9" stop-opacity="0.15"/>
+            </linearGradient>
+          </defs>
+
+          <g class="wave-drift-slow" opacity="0.55">
+            <path d="M-40 560 C 80 500, 160 620, 280 560 S 480 500, 640 580 L 640 780 L -40 780 Z" fill="url(#waveGradB)"/>
+          </g>
+          <g class="wave-drift" opacity="0.7">
+            <path d="M-40 620 C 100 570, 220 660, 340 610 S 520 560, 640 630 L 640 780 L -40 780 Z" fill="url(#waveGradA)"/>
+          </g>
+
+          <circle cx="470" cy="150" r="46" fill="none" stroke="#CEBCA1" stroke-width="1.4" opacity="0.55"/>
+
+          <g fill="none" stroke="#F6F0E6" stroke-linecap="round" opacity="0.95">
+            <path d="M120 250 C 210 200, 260 300, 210 360 C 175 403, 220 430, 300 410 C 400 385, 430 300, 380 240 C 345 198, 370 150, 430 155" stroke-width="3"/>
+            <path d="M150 300 C 225 262, 262 335, 222 385 C 195 418, 230 438, 295 422" stroke-width="2" opacity="0.6"/>
+            <path d="M175 345 C 230 320, 255 370, 225 405" stroke-width="1.4" opacity="0.4"/>
+          </g>
+          <g fill="none" stroke="#77CBB9" stroke-linecap="round" opacity="0.8">
+            <path d="M330 470 C 358 442, 400 438, 428 462 C 448 480, 450 508, 432 528" stroke-width="2"/>
+          </g>
+        </svg>
+        <div class="hero-visual-caption">
+          <span>Für Reittrainer:innen</span>
+          <span>Berlin</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== ÜBER DIE APP ============================== -->
+  <section class="section" id="app">
+    <div class="container about-grid">
+      <div class="about-copy reveal">
+        <div class="section-head">
+          <h2>Eine Stunde einstellen. Ein Klick zum Buchen.</h2>
+          <p>Statt zehn Nachrichten für einen Termin trägst du deine freien Zeiten einmal ein. Deine Schüler:innen sehen sofort, was frei ist, und buchen sich selbst ein.</p>
+        </div>
+        <div class="about-steps">
+          <div class="about-step">
+            <span class="about-step-index">1</span>
+            <div>
+              <h3>Stunden freigeben</h3>
+              <p>Trainer:innen legen ihre verfügbaren Zeiten für die Woche fest, einmalig oder als feste Regel.</p>
+            </div>
+          </div>
+          <div class="about-step">
+            <span class="about-step-index">2</span>
+            <div>
+              <h3>Schüler:innen buchen sich ein</h3>
+              <p>Freie Slots sind sofort sichtbar. Ein Klick genügt, die Bestätigung folgt automatisch.</p>
+            </div>
+          </div>
+          <div class="about-step">
+            <span class="about-step-index">3</span>
+            <div>
+              <h3>Der Stall bleibt im Überblick</h3>
+              <p>Absagen, Wartelisten und Auslastung laufen im Hintergrund mit, ohne zusätzlichen Aufwand.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="schedule-card">
+          <div class="schedule-card-head">
+            <h3>Wochenplan, Beispiel</h3>
+            <span>Reitanlage Talblick</span>
+          </div>
+          <ul class="schedule-legend">
+            <li><span class="legend-dot is-free"></span>Frei, buchbar</li>
+            <li><span class="legend-dot is-booked"></span>Gebucht</li>
+            <li><span class="legend-dot is-blocked"></span>Pause</li>
+          </ul>
+          <div class="schedule-grid" id="scheduleGrid">
+            <span></span>
+            <span class="schedule-col-head">Mo</span>
+            <span class="schedule-col-head">Di</span>
+            <span class="schedule-col-head">Mi</span>
+            <span class="schedule-col-head">Do</span>
+            <span class="schedule-col-head">Fr</span>
+
+            <span class="schedule-row-head">16:00</span>
+            <button class="slot" data-state="booked" disabled aria-label="Montag 16 Uhr, gebucht">JS</button>
+            <button class="slot" data-state="free" aria-label="Dienstag 16 Uhr, frei, klicken zum Buchen"></button>
+            <button class="slot" data-state="blocked" disabled aria-label="Mittwoch 16 Uhr, Pause"></button>
+            <button class="slot" data-state="booked" disabled aria-label="Donnerstag 16 Uhr, gebucht">MK</button>
+            <button class="slot" data-state="free" aria-label="Freitag 16 Uhr, frei, klicken zum Buchen"></button>
+
+            <span class="schedule-row-head">17:00</span>
+            <button class="slot" data-state="free" aria-label="Montag 17 Uhr, frei, klicken zum Buchen"></button>
+            <button class="slot" data-state="booked" disabled aria-label="Dienstag 17 Uhr, gebucht">TN</button>
+            <button class="slot" data-state="free" aria-label="Mittwoch 17 Uhr, frei, klicken zum Buchen"></button>
+            <button class="slot" data-state="booked" disabled aria-label="Donnerstag 17 Uhr, gebucht">LF</button>
+            <button class="slot" data-state="blocked" disabled aria-label="Freitag 17 Uhr, Pause"></button>
+
+            <span class="schedule-row-head">18:00</span>
+            <button class="slot" data-state="blocked" disabled aria-label="Montag 18 Uhr, Pause"></button>
+            <button class="slot" data-state="free" aria-label="Dienstag 18 Uhr, frei, klicken zum Buchen"></button>
+            <button class="slot" data-state="free" aria-label="Mittwoch 18 Uhr, frei, klicken zum Buchen"></button>
+            <button class="slot" data-state="free" aria-label="Donnerstag 18 Uhr, frei, klicken zum Buchen"></button>
+            <button class="slot" data-state="booked" disabled aria-label="Freitag 18 Uhr, gebucht">RS</button>
+
+            <span class="schedule-row-head">19:00</span>
+            <button class="slot" data-state="free" aria-label="Montag 19 Uhr, frei, klicken zum Buchen"></button>
+            <button class="slot" data-state="free" aria-label="Dienstag 19 Uhr, frei, klicken zum Buchen"></button>
+            <button class="slot" data-state="booked" disabled aria-label="Mittwoch 19 Uhr, gebucht">AH</button>
+            <button class="slot" data-state="free" aria-label="Donnerstag 19 Uhr, frei, klicken zum Buchen"></button>
+            <button class="slot" data-state="free" aria-label="Freitag 19 Uhr, frei, klicken zum Buchen"></button>
+          </div>
+          <p class="schedule-footnote" id="scheduleFootnote">Zum Ausprobieren: Klicke auf eine freie Zeit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FUNKTIONEN ============================== -->
+  <section class="section" id="funktionen" data-surface="sunken">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Funktionen</span>
+        <h2>Gebaut für den Alltag im Stall.</h2>
+        <p>Zwei Seiten, eine App. Was Trainer:innen und Schüler:innen heute schon nutzen können, und was als Nächstes kommt.</p>
+      </div>
+
+      <div class="features-bento">
+        <div class="feature-panel for-trainers reveal">
+          <span class="feature-panel-tag">Für Trainer:innen</span>
+          <h3>Volle Kontrolle über den Kalender</h3>
+          <ul class="feature-list">
+            <li>
+              <i class="ph ph-calendar-plus"></i>
+              <div>
+                <h4>Stunden anlegen</h4>
+                <p>Einzelne Termine oder wiederkehrende Zeiten in wenigen Sekunden festlegen.</p>
+              </div>
+            </li>
+            <li>
+              <i class="ph ph-users-three"></i>
+              <div>
+                <h4>Auslastung im Blick</h4>
+                <p>Alle Buchungen, Absagen und freien Plätze auf einen Blick, ohne Zettelwirtschaft.</p>
+              </div>
+            </li>
+            <li>
+              <i class="ph ph-bell-ringing"></i>
+              <div>
+                <h4>Automatische Erinnerungen</h4>
+                <p>Trainer:innen und Schüler:innen werden rechtzeitig an anstehende Stunden erinnert.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="feature-panel for-students reveal">
+          <span class="feature-panel-tag">Für Schüler:innen</span>
+          <h3>Buchen, ohne nachzufragen</h3>
+          <ul class="feature-list">
+            <li>
+              <i class="ph ph-magnifying-glass"></i>
+              <div>
+                <h4>Freie Zeiten sehen</h4>
+                <p>Der Stundenplan der eigenen Trainerin oder des Trainers ist jederzeit einsehbar.</p>
+              </div>
+            </li>
+            <li>
+              <i class="ph ph-cursor-click"></i>
+              <div>
+                <h4>In Sekunden gebucht</h4>
+                <p>Ein Klick auf die passende Zeit reicht, die Bestätigung kommt automatisch.</p>
+              </div>
+            </li>
+            <li>
+              <i class="ph ph-chat-circle-dots"></i>
+              <div>
+                <h4>Kein Hin und Her</h4>
+                <p>Absagen und Umbuchungen laufen über die App, nicht über den Gruppenchat.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="roadmap-strip reveal">
+          <div>
+            <h3>Und das ist erst der Anfang</h3>
+            <p>Gallopal wird laufend um Funktionen erweitert, die im engen Austausch mit Trainer:innen entstehen.</p>
+          </div>
+          <ul class="roadmap-pills">
+            <li class="roadmap-pill"><i class="ph ph-hourglass-medium"></i>Zahlungsabwicklung</li>
+            <li class="roadmap-pill"><i class="ph ph-hourglass-medium"></i>Fortschrittsdokumentation</li>
+            <li class="roadmap-pill"><i class="ph ph-hourglass-medium"></i>Gruppenstunden</li>
+            <li class="roadmap-pill"><i class="ph ph-hourglass-medium"></i>Stallverwaltung</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== WARUM GALLOPAL ============================== -->
+  <section class="section" data-surface="dark">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Warum Gallopal</span>
+        <h2>Aus dem Stall heraus entwickelt.</h2>
+      </div>
+
+      <div class="values-band">
+        <div class="value-item reveal">
+          <span class="value-index">01</span>
+          <h3>Naturverbunden gedacht, nicht nur digitalisiert</h3>
+          <p>Gallopal entsteht mit einem Verständnis für den Reitsport, nicht als generische Buchungssoftware mit Pferdefoto. Die Abläufe orientieren sich am echten Alltag im Stall.</p>
+        </div>
+        <div class="value-item reveal">
+          <span class="value-index">02</span>
+          <h3>Vertrauensvoll</h3>
+          <p>Daten von Trainer:innen und Schüler:innen bleiben geschützt. Datenschutz ist von Beginn an Teil der Entwicklung, nicht nachträglich ergänzt.</p>
+        </div>
+        <div class="value-item reveal">
+          <span class="value-index">03</span>
+          <h3>Im engen Austausch entwickelt</h3>
+          <p>Jede Funktion entsteht im Gespräch mit Reittrainer:innen, die die App im Alltag testen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== ÜBER MICH ============================== -->
+  <section class="section" id="ueber-mich">
+    <div class="container">
+      <div class="founder reveal">
+        <div class="founder-monogram" aria-hidden="true">ALG</div>
+        <p class="founder-quote">"Ich wollte eine App, die versteht, wie ein Stall wirklich tickt, weil ich selbst lange genug in einem stand."</p>
+        <div>
+          <p class="founder-name">Anna Lena Gerth</p>
+          <p class="founder-role">Gründerin und Entwicklerin, Gallopal</p>
+        </div>
+        <p class="founder-bio">Anna Lena Gerth entwickelt Gallopal von der ersten Idee bis zur letzten Zeile Code selbst. Nach ihrem Master in Wirtschaftsinformatik verbindet sie technisches Handwerk mit eigener Reiterfahrung, um eine Terminplanung zu bauen, die Trainer:innen wirklich abnimmt, was heute Zeit kostet.</p>
+        <div class="founder-badges">
+          <span class="founder-badge"><i class="ph ph-graduation-cap"></i>Master Wirtschaftsinformatik</span>
+          <span class="founder-badge"><i class="ph ph-seal-check"></i>Gefördert durch EXIST Women</span>
+          <span class="founder-badge"><i class="ph ph-code"></i>Konzept, Design und Entwicklung aus einer Hand</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== KONTAKT ============================== -->
+  <section class="section" id="kontakt" data-surface="sunken">
+    <div class="container">
+      <div class="contact-panel reveal">
+        <div class="section-head">
+          <span class="eyebrow">Kontakt</span>
+          <h2>Sei von Anfang an dabei.</h2>
+          <p>Trag dich für den Newsletter ein oder werde Teil der Testphase und probiere Gallopal vor allen anderen aus.</p>
+        </div>
+
+        <div class="interest-toggle" role="group" aria-label="Interesse auswählen">
+          <button type="button" id="interestNewsletter" aria-pressed="true">Newsletter</button>
+          <button type="button" id="interestTester" aria-pressed="false">Tester werden</button>
+        </div>
+
+        <form id="signupForm" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="fieldName">Name</label>
+              <input type="text" id="fieldName" name="name" autocomplete="name" placeholder="Vor- und Nachname">
+              <span class="form-error" id="errorName"></span>
+            </div>
+            <div class="form-field">
+              <label for="fieldEmail">E-Mail</label>
+              <input type="email" id="fieldEmail" name="email" autocomplete="email" placeholder="du@example.com">
+              <span class="form-error" id="errorEmail"></span>
+            </div>
+            <div class="form-field is-full">
+              <label for="fieldRole">Ich bin</label>
+              <select id="fieldRole" name="role">
+                <option value="trainerin">Reittrainer:in</option>
+                <option value="schuelerin">Reitschüler:in</option>
+                <option value="sonstiges">Sonstiges</option>
+              </select>
+            </div>
+            <div class="form-field is-full">
+              <label for="fieldMessage">Nachricht <span class="hint">(optional)</span></label>
+              <textarea id="fieldMessage" name="message" placeholder="Was wünschst du dir von Gallopal?"></textarea>
+            </div>
+            <input type="hidden" name="interest" id="fieldInterest" value="newsletter">
+
+            <div class="form-submit-row">
+              <button type="submit" class="btn btn-primary" id="submitBtn">Anmelden</button>
+              <span class="form-consent">Mit dem Absenden stimmst du zu, dass wir dich per E-Mail zu Gallopal kontaktieren.</span>
+            </div>
+          </div>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <i class="ph ph-check-circle"></i>
+          <h3>Danke, du bist dabei.</h3>
+          <p>Deine Anmeldung wurde vorbereitet. Bitte bestätige sie kurz in deinem E-Mail-Programm, das sich gleich öffnet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="nav-logo-mark">gallopal</span>
+        <p>Die Trainingsplanung für Reittrainer:innen. Entwickelt in Deutschland, gefördert durch EXIST Women.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Seite</h4>
+        <ul>
+          <li><a href="#app">Über die App</a></li>
+          <li><a href="#funktionen">Funktionen</a></li>
+          <li><a href="#ueber-mich">Über mich</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="#impressum">Impressum</a></li>
+          <li><a href="#datenschutz">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Gallopal, Anna Lena Gerth</span>
+      <span>Reitstunden planen, ohne Umwege</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
