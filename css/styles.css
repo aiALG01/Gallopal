@@ -3,20 +3,25 @@
    ========================================================================== */
 
 :root {
-  /* --- Color: primitives (from brand moodboard) --- */
-  --c-forest-900: #012A20;
-  --c-forest-700: #004A38;
-  --c-forest-500: #006246;
-  --c-mint-400:   #77CBB9;
-  --c-mint-200:   #BFE6DB;
-  --c-lavender-500: #817E9F;
-  --c-lavender-300: #ACA9C2;
-  --c-tan-400:    #CEBCA1;
-  --c-tan-200:    #E9DECD;
-  --c-tan-100:    #F6F0E6;
-  --c-wine-900:   #220C10;
+  /* --- Color: primitives (brand moodboard: Naturverbunden/Planung palette) --- */
+  --c-forest-900: #1F3D2E; /* Tiefgrün */
+  --c-forest-700: #1F3D2E; /* Tiefgrün, doubles as hover-darken target */
+  --c-forest-500: #385E46; /* Waldgrün, primary brand accent */
+  --c-mint-400:   #A6B79A; /* Salbeigrün, soft accent */
+  --c-mint-200:   #BFD6E6; /* Lichtblau, used for the scheduling widget only */
+  --c-lavender-500: #1D3557; /* Tiefblau, reserved */
+  --c-lavender-300: #D7DADC; /* Steingrau, neutral/inactive state */
+  --c-tan-400:    #4C6A80; /* Taubenblau, reserved */
+  --c-tan-200:    #D7DADC; /* Steingrau */
+  --c-tan-100:    #E8E5D9; /* Sand */
+  --c-wine-900:   #220C10; /* Dunkelbraun, kept for the wordmark and dark accents */
   --c-wine-700:   #3A161C;
-  --c-cream-000:  #FBF8F2;
+  --c-cream-000:  #FAF8F3; /* Warmweiß */
+
+  /* --- Color: structure/planning accent (used sparingly in the schedule widget) --- */
+  --c-blue-900: #1D3557; /* Tiefblau */
+  --c-blue-500: #4C6A80; /* Taubenblau */
+  --c-blue-200: #BFD6E6; /* Lichtblau */
 
   /* --- Color: semantic --- */
   --surface-page:        var(--c-cream-000);
@@ -34,7 +39,7 @@
   --text-on-accent:      var(--c-cream-000);
 
   --border-hairline:     rgba(34, 12, 16, 0.12);
-  --border-hairline-dark: rgba(251, 248, 242, 0.16);
+  --border-hairline-dark: rgba(250, 248, 243, 0.16);
 
   --accent:              var(--c-forest-500);
   --accent-strong:       var(--c-forest-700);
@@ -91,8 +96,8 @@
 
   /* --- Elevation (tinted, never pure black) --- */
   --shadow-sm: 0 2px 10px rgba(34, 12, 16, 0.06);
-  --shadow-md: 0 12px 32px rgba(1, 42, 32, 0.12);
-  --shadow-lg: 0 24px 64px rgba(1, 42, 32, 0.18);
+  --shadow-md: 0 12px 32px rgba(31, 61, 46, 0.12);
+  --shadow-lg: 0 24px 64px rgba(31, 61, 46, 0.18);
 
   /* --- Motion --- */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -332,7 +337,7 @@ button { cursor: pointer; }
 }
 
 .nav.is-scrolled {
-  background: rgba(251, 248, 242, 0.86);
+  background: rgba(250, 248, 243, 0.86);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   box-shadow: var(--shadow-sm);
@@ -668,7 +673,7 @@ button { cursor: pointer; }
   flex-shrink: 0;
 }
 
-.legend-dot.is-free { background: var(--surface-raised); border: 2px solid var(--c-mint-400); }
+.legend-dot.is-free { background: var(--surface-raised); border: 2px solid var(--c-blue-500); }
 .legend-dot.is-booked { background: var(--c-forest-500); }
 .legend-dot.is-blocked { background: var(--c-lavender-300); }
 
@@ -683,7 +688,7 @@ button { cursor: pointer; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
-  color: var(--text-muted);
+  color: var(--c-blue-500);
   text-align: center;
   padding-bottom: var(--sp-2);
 }
@@ -713,12 +718,12 @@ button { cursor: pointer; }
 
 .slot[data-state="free"] {
   background: var(--surface-raised);
-  border-color: var(--c-mint-400);
-  color: var(--c-forest-500);
+  border-color: var(--c-blue-500);
+  color: var(--c-blue-900);
 }
 
 .slot[data-state="free"]:hover {
-  background: var(--c-mint-200);
+  background: var(--c-blue-200);
   transform: translateY(-2px);
 }
 
@@ -742,9 +747,9 @@ button { cursor: pointer; }
 }
 
 .slot[data-state="pending"] {
-  background: var(--c-mint-200);
-  border-color: var(--c-mint-400);
-  color: var(--c-forest-700);
+  background: var(--c-blue-200);
+  border-color: var(--c-blue-500);
+  color: var(--c-blue-900);
 }
 
 .slot:disabled { pointer-events: none; }
@@ -1084,7 +1089,7 @@ button { cursor: pointer; }
 .form-field select:focus {
   outline: none;
   border-color: var(--c-forest-500);
-  box-shadow: 0 0 0 4px rgba(0, 98, 70, 0.14);
+  box-shadow: 0 0 0 4px rgba(56, 94, 70, 0.14);
 }
 
 .form-field textarea { resize: vertical; min-height: 6rem; }
