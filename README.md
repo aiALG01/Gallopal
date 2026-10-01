@@ -1,6 +1,6 @@
-# Gallopal
+# Galoppal
 
-Marketing-Website für Gallopal, die App zur automatisierten Trainingsplanung für Reittrainer:innen.
+Marketing-Website für Galoppal, die App zur automatisierten Trainingsplanung für Reittrainer:innen.
 
 ## Stack
 

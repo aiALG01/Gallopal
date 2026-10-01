@@ -197,7 +197,7 @@
       var interest = interestField.value === "tester" ? "Testphase" : "Newsletter";
       var roleLabel = roleField.options[roleField.selectedIndex].text;
 
-      var subject = "Gallopal Anmeldung: " + interest;
+      var subject = "Galoppal Anmeldung: " + interest;
       var bodyLines = [
         "Name: " + nameField.value.trim(),
         "E-Mail: " + emailField.value.trim(),
