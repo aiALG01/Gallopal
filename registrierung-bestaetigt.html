@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>E-Mail bestätigt — Galoppal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #220C10;
+    --green: #1F3D2E;
+    --blue: #4C6A80;
+    --surface: #FAF8F3;
+    --card: #FFFFFF;
+    --danger: #B3261E;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    padding: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--card);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(34, 12, 16, .08);
+    padding: 36px 30px 30px;
+    text-align: center;
+  }
+  .icon {
+    width: 56px; height: 56px;
+    margin: 0 auto 18px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(31, 61, 46, .12);
+    font-size: 26px;
+  }
+  .icon.pending { background: rgba(76, 106, 128, .14); }
+  .icon.error { background: rgba(179, 38, 30, .1); }
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 500;
+    font-size: 24px;
+    margin: 0 0 10px;
+    letter-spacing: -.2px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(34, 12, 16, .65);
+    margin: 0 0 6px;
+  }
+  .note {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: rgba(76, 106, 128, .08);
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--blue);
+    text-align: left;
+  }
+  .spinner {
+    width: 22px; height: 22px; margin: 8px auto 0;
+    border: 2.5px solid rgba(31, 61, 46, .2);
+    border-top-color: var(--green);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Gleiches Supabase-Projekt wie config.js in diesem Ordner. -->
+  <script src="./vendor/supabase.js"></script>
+  <script>
+    const SUPABASE_URL = 'https://vklfohuxyplsvdhmvmhb.supabase.co';
+    const SUPABASE_ANON_KEY =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbGZvaHV4eXBsc3ZkaG12bWhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNDQxMzIsImV4cCI6MjEwMjcyMDEzMn0.4I1409zuNkcrihuYMANS4D56RANCnNAJSkmdyA0ftfo';
+
+    // detectSessionInUrl (default: true) makes the client itself parse the
+    // tokens/code Supabase appended to this URL after verifying the
+    // confirmation link — no manual URL parsing needed here.
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const card = document.getElementById('card');
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+      }[c]));
+    }
+
+    function renderError() {
+      card.innerHTML = `
+        <div class="icon error">⚠️</div>
+        <h1>Das hat nicht geklappt</h1>
+        <p>Dieser Bestätigungslink ist ungültig oder abgelaufen. Du kannst
+        in der App eine neue Bestätigungs-E-Mail anfordern.</p>
+      `;
+    }
+
+    function renderSuccess(name, accountStatus) {
+      const safeName = escapeHtml(name || '');
+      const pending = accountStatus === 'pending_guardian';
+      card.innerHTML = `
+        <div class="icon ${pending ? 'pending' : ''}">${pending ? '🐴' : '✅'}</div>
+        <h1>${pending ? 'Fast geschafft!' : 'E-Mail bestätigt!'}</h1>
+        <p>${safeName ? `Hallo ${safeName}, ` : ''}deine E-Mail-Adresse ist bestätigt. Du
+        kannst dich jetzt in der Galoppal-App anmelden.</p>
+        ${pending ? `<div class="note">Weil du unter 16 bist, müssen deine Eltern die
+        Nutzung noch einmalig bestätigen — wir haben ihnen dafür eine
+        separate E-Mail geschickt. Bis dahin kannst du dich zwar anmelden,
+        aber noch nichts buchen.</div>` : ''}
+      `;
+    }
+
+    (async () => {
+      // Give supabase-js a tick to finish parsing the URL and establishing
+      // the session before we check for it.
+      await new Promise((r) => setTimeout(r, 300));
+      const { data: { session } } = await client.auth.getSession();
+      if (!session) {
+        renderError();
+        return;
+      }
+      const { data: profile, error } = await client
+        .from('profiles')
+        .select('full_name, account_status')
+        .eq('id', session.user.id)
+        .single();
+      if (error || !profile) {
+        // Session is real even if the profile read failed for some reason
+        // (e.g. RLS edge case) — still tell them the confirmation worked.
+        renderSuccess('', null);
+        return;
+      }
+      renderSuccess(profile.full_name, profile.account_status);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Einwilligung widerrufen — Galoppal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #220C10;
+    --danger: #B3261E;
+    --danger-dark: #8f1e18;
+    --surface: #FAF8F3;
+    --card: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    padding: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--card);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(34, 12, 16, .08);
+    padding: 36px 30px 30px;
+    text-align: center;
+  }
+  .icon {
+    width: 56px; height: 56px;
+    margin: 0 auto 18px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(179, 38, 30, .1);
+    font-size: 26px;
+  }
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 500;
+    font-size: 24px;
+    margin: 0 0 10px;
+    letter-spacing: -.2px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(34, 12, 16, .65);
+    margin: 0 0 6px;
+  }
+  .child-name { font-weight: 700; color: var(--ink); }
+  button {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--danger);
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background .15s ease, opacity .15s ease;
+  }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  button:not(:disabled):hover { background: var(--danger-dark); }
+  .error-text { color: var(--danger); font-size: 13px; margin-top: 14px; }
+  .spinner {
+    width: 22px; height: 22px; margin: 8px auto 0;
+    border: 2.5px solid rgba(179, 38, 30, .2);
+    border-top-color: var(--danger);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="spinner"></div>
+  </div>
+
+  <script src="./vendor/supabase.js"></script>
+  <script>
+    const SUPABASE_URL = 'https://vklfohuxyplsvdhmvmhb.supabase.co';
+    const SUPABASE_ANON_KEY =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZrbGZvaHV4eXBsc3ZkaG12bWhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNDQxMzIsImV4cCI6MjEwMjcyMDEzMn0.4I1409zuNkcrihuYMANS4D56RANCnNAJSkmdyA0ftfo';
+
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const card = document.getElementById('card');
+    const token = new URLSearchParams(location.search).get('token');
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+      }[c]));
+    }
+
+    function renderError(message) {
+      card.innerHTML = `<div class="icon">⚠️</div><h1>Das hat nicht geklappt</h1><p>${escapeHtml(message)}</p>`;
+    }
+
+    function renderForm() {
+      card.innerHTML = `
+        <div class="icon">✋</div>
+        <h1>Einwilligung widerrufen</h1>
+        <p>Damit wird die Nutzung von Galoppal für Ihr Kind sofort gesperrt
+        und der Löschprozess für das Konto angestoßen. Genauso einfach wie
+        die Erteilung — ein Klick genügt.</p>
+        <button id="revoke-btn">Einwilligung jetzt widerrufen</button>
+        <div id="form-error" class="error-text"></div>
+      `;
+      const btn = document.getElementById('revoke-btn');
+      const errEl = document.getElementById('form-error');
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        btn.textContent = 'Wird widerrufen …';
+        errEl.textContent = '';
+        try {
+          const { data, error } = await client.rpc('revoke_guardian_consent', {
+            p_token: token,
+          });
+          if (error) throw error;
+          const row = Array.isArray(data) ? data[0] : data;
+          renderSuccess(row);
+        } catch (e) {
+          errEl.textContent = e.message || String(e);
+          btn.disabled = false;
+          btn.textContent = 'Einwilligung jetzt widerrufen';
+        }
+      });
+    }
+
+    function renderSuccess(row) {
+      const name = escapeHtml(row?.full_name || 'Das Konto');
+      card.innerHTML = `
+        <div class="icon">✅</div>
+        <h1>Widerrufen</h1>
+        <p>Die Einwilligung für <span class="child-name">${name}</span> wurde widerrufen.
+        Das Konto ist gesperrt und wird gelöscht.</p>
+      `;
+    }
+
+    if (!token) {
+      renderError('Dieser Link ist unvollständig — bitte den Link aus der E-Mail vollständig öffnen.');
+    } else {
+      renderForm();
+    }
+  </script>
+</body>
+</html>
